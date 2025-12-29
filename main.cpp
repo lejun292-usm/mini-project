@@ -163,7 +163,7 @@ int main() {
             }
         }
 
-        // --- OPTION 2: REGISTER ---
+        // OPTION 2: REGISTER 
 
         else if (loginchoice == 2) { 
             system("cls");
@@ -180,7 +180,7 @@ int main() {
             system("pause");
         }
 
-        // --- OPTION 3: VIEW PROFILE ---
+        // OPTION 3: VIEW PROFILE
 
         else if (loginchoice == 3) { 
             system("cls");
@@ -195,3 +195,4 @@ int main() {
 
     return 0;
 }
+
