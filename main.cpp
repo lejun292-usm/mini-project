@@ -30,10 +30,10 @@ void showLabMenu(string studentName , string matric) {
         cout << "\n==================================\n";
         cout << "        LAB ITEM STOCK MENU      \n";
         cout << "==================================\n";
-        cout << "Please select an option:\n";
+        cout << "PLEASE SELECT AN OPTION:\n";
         
         // User Section (Available to all students) 
-        cout << "\n[USER]\n";
+        cout << "[USER]\n";
         cout << "1. View Lab Stock\n";
         cout << "2. Search Lab Item\n";
         cout << "3. Borrow Lab Item\n";
@@ -42,7 +42,7 @@ void showLabMenu(string studentName , string matric) {
         cout << "\n==================================\n";
         
         // Admin Section (Password Protected inside functions) 
-        cout << "\n[ADMIN]\n";
+        cout << "[ADMIN]\n";
         cout << "6. Add New Item\n";
         cout << "7. View All Borrow Records\n";
         cout << "8. Delete Lab Item\n";
@@ -50,7 +50,7 @@ void showLabMenu(string studentName , string matric) {
         cout << "\n==================================\n";
         
         // Exit Section 
-        cout << "\n[EXIT]\n";
+        cout << "[EXIT]\n";
         cout << "10. Logout\n";
         cout << "\n==================================\n";
         cout << "Select an option (1-10): ";
@@ -153,9 +153,10 @@ int main() {
         cout << "==========================\n";
         cout << "   STUDENT PORTAL LOGIN   \n";
         cout << "==========================\n";
+        cout << "PLEASE SELECT AN OPTION:\n";
         cout << "1. Login\n2. Register\n3. View Profile\n4. Exit\n";
         cout << "==========================\n";
-        cout << "Enter Your Choice: ";
+        cout << "Select an option (1-4): ";
         cin >> loginchoice;
 
         // OPTION 1: LOGIN 
@@ -209,3 +210,4 @@ int main() {
 
     return 0;
 }
+
