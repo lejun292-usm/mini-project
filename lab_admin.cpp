@@ -5,6 +5,8 @@
 #include <vector>
 #include <ctime>
 #include "lab_user.hpp"
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -29,7 +31,8 @@ void addLabItem() {
     cout << "\nEnter Admin Password to Add Item: ";  
     cin >> password;
     if (password != "5555") {  
-        cout << "[Error] Incorrect password.\n";
+        cout << "[Access Denied] Wrong password.\n";
+        this_thread::sleep_for(chrono::milliseconds(1000)); // Pause for 1.5 seconds
         return; // Stop function if password is wrong
     }
     system("cls");  // Clear screen
@@ -64,7 +67,8 @@ void viewAllBorrowRecords() {
 
     if (password != "5555") {
         cout << "[Access Denied] Wrong password.\n";
-        return;
+        this_thread::sleep_for(chrono::milliseconds(1000)); // Pause for 1.5 seconds
+        return; // Stop function if password is wrong
     }
 
     ifstream file("borrowed_data.txt");
@@ -97,7 +101,9 @@ void deleteLabItem() {
     cin >> password;
 
     if (password != "5555") {
-        cout << "[Error] Incorrect password.\n";
+        cout << "[Access Denied] Wrong password.\n";
+        this_thread::sleep_for(chrono::milliseconds(1000)); // Pause for 1.5 seconds
+        return; // Stop function if password is wrong
         return;
     }
 
@@ -160,7 +166,11 @@ void updateItemQuantity() {
     cout << "=== Admin Authentication Required ===\n";
     cout << "Enter Admin Password: ";
     cin >> password;
-    if (password != "5555") return;
+    if (password != "5555") 
+        cout << "[Access Denied] Wrong password.\n";
+        this_thread::sleep_for(chrono::milliseconds(1000)); // Pause for 1.5 seconds
+        return; // Stop function if password is wrong
+
 
     // Load items
     vector<LabItem> items;
