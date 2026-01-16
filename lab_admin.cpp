@@ -10,16 +10,24 @@
 
 using namespace std;
 
-// ( Data Structure )
-// Defines what a "LabItem" looks like: it has a Name and a Quantity.
+/* TAN LE JUN ( 24304103 )
+=========================================================
+ DATA STRUCTURE: LabItem
+ PURPOSE: A blueprint for a single item in our stock. 
+ Instead of managing two separate arrays (one for names, one for qty),
+ we group them into a single object.
+*/
 
 struct LabItem { 
     string name; 
     int quantity; 
 };
 
-// Function 1: Add New Item (Admin Only)
-// Allows adding new equipment to the inventory file.
+/* TAN LE JUN ( 24304103 )
+=========================================================
+ FUNCTION: addLabItem
+ PURPOSE: Allows admin to add new items to the stock list.
+========================================================= */
 
 void addLabItem() {
     string itemName;
@@ -47,17 +55,23 @@ void addLabItem() {
     // Open file in APPEND mode (ios::app) to add to the bottom
 
     ofstream stockFile("lab_items_stock.txt", ios::app);
-    
     if (stockFile.is_open()) {
         stockFile << itemName << " " << quantity << endl;
         stockFile.close();
         cout << "[Success] Item added to inventory.\n";
+
+    // If file couldn't be opened
+
     } else {
         cout << "Error: Unable to open stock file.\n";
     }
 }
 
-// Function 2: View All Borrow Records (Admin Only)
+/*LEE PUEH KANG ( 24302612 )
+=========================================================
+ FUNCTION: viewAllBorrowRecords
+ PURPOSE: Displays all borrow records for admin review.
+=========================================================*/
 
 void viewAllBorrowRecords() {
     string password;
@@ -65,6 +79,7 @@ void viewAllBorrowRecords() {
     cout << "Enter Admin Password: ";
     cin >> password;
 
+    // Password Check
     if (password != "5555") {
         cout << "[Access Denied] Wrong password.\n";
         this_thread::sleep_for(chrono::milliseconds(1000)); // Pause for 1.5 seconds
@@ -82,7 +97,9 @@ void viewAllBorrowRecords() {
     cout << "------------------------------------------------\n";
 
     if (file.is_open()) {
+
         // Read 3 items : Matric, Item Name, and Time
+
         while (file >> matric >> item >> timeVal) {
             cout << left << setw(15) << matric << setw(25) << item << timeVal << endl;
         }
@@ -93,7 +110,12 @@ void viewAllBorrowRecords() {
     cout << "================================================\n";
 }
 
-// Function 3 : Delete Item (Admin Only) 
+/*LEE PUEH KANG ( 24302612)
+=========================================================
+ FUNCTION: deleteLabItem
+ PURPOSE: Allows admin to delete an item from the stock list.
+========================================================= */
+
 void deleteLabItem() {
     string password;
     cout << "=== Admin Authentication Required ===\n";
@@ -159,20 +181,24 @@ void deleteLabItem() {
     cout << "[Success] Deleted item: " << deletedName << endl;
 }
 
-// Function 4 : Update Quantity (Restock)
+/*LEE PUEH KANG ( 24302612)
+=========================================================
+ FUNCTION: updateItemQuantity
+ PURPOSE: Allows admin to update the quantity of an existing item.
+========================================================= */
 
 void updateItemQuantity() {
     string password;
     cout << "=== Admin Authentication Required ===\n";
     cout << "Enter Admin Password: ";
     cin >> password;
-    if (password != "5555") 
+    if (password != "5555") {
         cout << "[Access Denied] Wrong password.\n";
         this_thread::sleep_for(chrono::milliseconds(1000)); // Pause for 1.5 seconds
         return; // Stop function if password is wrong
-
-
+    }
     // Load items
+    
     vector<LabItem> items;
     LabItem temp;
     ifstream in("lab_items_stock.txt");
@@ -188,6 +214,7 @@ void updateItemQuantity() {
     }
 
     // Display List
+
     system("cls");
     cout << "\n=== UPDATE ITEM QUANTITY ===\n";
     cout << left << setw(5) << "No." << setw(25) << "Item Name" << "Quantity" << endl;
@@ -197,6 +224,7 @@ void updateItemQuantity() {
     }
 
     // Ask for Number
+
     int choice;
     cout << "\nEnter Number to UPDATE (0 to cancel): ";
     cin >> choice;
@@ -208,6 +236,7 @@ void updateItemQuantity() {
     }
 
     // Ask for New Quantity
+
     int newQty;
     int index = choice - 1;
     cout << "Updating: " << items[index].name << "\n";
@@ -215,9 +244,11 @@ void updateItemQuantity() {
     cin >> newQty;
 
     // 5. Update in memory
+
     items[index].quantity = newQty;
 
     // 6. Save back to file
+
     ofstream out("lab_items_stock.txt");
     for (auto i : items) {
         out << i.name << " " << i.quantity << endl;
@@ -226,4 +257,7 @@ void updateItemQuantity() {
 
     cout << "[Success] Quantity updated for " << items[index].name << endl;
 }
+
+
+
 
