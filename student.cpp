@@ -6,7 +6,14 @@
 
 using namespace std;
 
-// Check if a student exists in the database or not
+
+/* Programmer : AMIR RIDZAN BIN AZLAN ( 25100166 )
+=========================================================
+ FUNCTION: searchStudent
+ PURPOSE: Scans the database file to find if a student exists.
+ It will return the full line of text if found, or "NOT_FOUND" if not.
+ ========================================================= */
+
 string searchStudent(string matric_to_find) {
     ifstream myfile("student.txt"); // Read from student.txt
     string line;
@@ -27,7 +34,12 @@ string searchStudent(string matric_to_find) {
     return "NOT_FOUND"; // Return specific signal if student is not in the file
 }
 
-// Add a new student to the database
+/* Programmer : AMIR RIDZAN BIN AZLAN ( 25100166 )
+=========================================================
+// FUNCTION: registerStudent
+// PURPOSE: Collects new user details and saves them to the file.
+ ========================================================= */
+
 void registerStudent(string matric_num) {
     string name, email, ic;
     
@@ -58,6 +70,12 @@ void registerStudent(string matric_num) {
 
 // Extract just the Name from a data line
 
+/* Programmer : AMIR RIDZAN BIN AZLAN ( 25100166 )
+=========================================================
+ FUNCTION: getNameFromLine
+ PURPOSE: A helper utility to extract just the student's name 
+          from a long string of data.
+========================================================= */
 string getNameFromLine(string line) {
     stringstream ss(line); // Turn the text line into a stream
     string segment;
@@ -71,7 +89,12 @@ string getNameFromLine(string line) {
     return "Unknown"; 
 }
 
-// Display full student details
+/* LIM YU HAN ( 25100159 )
+ =========================================================
+ FUNCTION: viewUserProfile
+ PURPOSE: Finds a student and displays their info in a formatted table.
+========================================================= */
+
 void viewUserProfile(string matric_num) {
     // reusing the search function to get the data string
     string result = searchStudent(matric_num);
