@@ -1,3 +1,23 @@
+/* Mini Project Title : LAB EQUIPMENT STATUS RECORDER SYSTEM
+   Purpose : The purpose of the system is to digitally manage and track laboratory equipment,
+             allowing administrators to maintain accurate stock levels while enabling students 
+             to borrow and return items with an automated mechanism for calculating fines on overdue returns.
+             
+    Programmer Name and Matric Number : AMIR RIDZAN BIN AZLAN ( 25100166 ) ------- Leader
+                                        TAN LE JUN ( 24304103 )
+                                        LIM YU HAN ( 25100159 )
+                                        THANISHWARAN A/L M.SARAVANAN ( 24304965 )
+                                        LEE PUEH KANG ( 24302612 )
+                                        
+
+
+             
+             */
+
+
+
+
+
 #include <iostream>
 #include <string>
 #include <cstdlib> 
@@ -10,13 +30,13 @@
 #include <fstream>
 using namespace std;
 
-// =============================================================
-// FUNCTION: showLabMenu
-// PURPOSE: Displays the main dashboard after a student logs in.
-// PARAMETERS: 
-//    - studentName: Used to greet the user.
-//    - matric: Passed to borrow/return functions to track who is doing what.
-// =============================================================
+
+/* Programmer : TAN LE JUN ( 24304103 )
+=============================================================
+FUNCTION: showLabMenu
+PURPOSE: Displays the main dashboard after a student logs in.
+// ============================================================= */
+    
 
 void showLabMenu(string studentName , string matric) {
     int choice;
@@ -59,38 +79,51 @@ void showLabMenu(string studentName , string matric) {
         // --- INPUT VALIDATION (CRITICAL) ---
         // Checks if user typed a letter instead of a number.
         // If we don't fix this, the program will crash (infinite loop).
-        if (cin.fail()) { 
-            cin.clear(); // Reset the error flag
-            cin.ignore(10000, '\n'); // Ignore the bad characters
-            choice = 0; // Set invalid choice to trigger 'default' case
+if (cin.fail()) { 
+            cin.clear(); // 1. Clear the error flag on cin so it works again
+            cin.ignore(10000, '\n'); // 2. Discard the invalid input from the buffer
+            choice = 0; // 3. Set choice to 0 so it hits the 'default' case below
         }
       
-        // Switch Case: Routes user to the correct function based on choice
+        // --- ROUTING BLOCK (Switch Statement) ---
+        // Based on the integer value of 'choice', we execute specific code blocks.
         switch(choice) {
+            
+            // CASE 1: VIEW STOCK
             case 1: 
-                system("cls"); 
-                viewLabStock(); // Call function from lab_item_stock.cpp
+                system("cls"); // Clear menu
+                viewLabStock(); // Call external function to show list
                 cout << "\n"; 
-                system("pause"); // Wait for user to read output
-                break;
+                system("pause"); // Wait for user to press a key before going back to loop
+                break; // Exit switch and go to 'while' condition
+            
+            // CASE 2: SEARCH
             case 2: 
                 system("cls"); 
                 searchLabItem(); 
                 cout << "\n"; 
                 system("pause"); 
                 break;
+            
+            // CASE 3: BORROW
             case 3: 
                 system("cls"); 
-                borrowLabItem(matric); // Pass matric to record the transaction
+                // We pass 'matric' here so the system knows WHO is borrowing the item.
+                borrowLabItem(matric); 
                 cout << "\n"; 
                 system("pause");
                 break;
+            
+            // CASE 4: RETURN
             case 4: 
                 system("cls"); 
-                returnLabItem(matric); // Pass matric to find their loan
+                // We pass 'matric' to find items linked to this specific student.
+                returnLabItem(matric); 
                 cout << "\n"; 
                 system("pause");
                 break;
+            
+            // CASE 5: VIEW OWN LOANS
             case 5: 
                 system("cls");
                 viewBorrowedItem(matric);
@@ -98,24 +131,32 @@ void showLabMenu(string studentName , string matric) {
                 system("pause");
                 cout << "\n";
                 break;
+            
+            // CASE 6: ADD ITEM (Admin)
             case 6: 
                 system("cls");
-                addLabItem();
+                addLabItem(); // Calls function to create new stock
                 cout << "\n"; 
                 system("pause");
                 break;
+            
+            // CASE 7: VIEW ALL RECORDS (Admin)
             case 7: 
                 system("cls");
                 viewAllBorrowRecords(); 
                 cout << "\n"; 
                 system("pause");
                 break;
+            
+            // CASE 8: DELETE ITEM (Admin)
             case 8: 
                 system("cls");
                 deleteLabItem(); 
                 cout << "\n"; 
                 system("pause");
                 break;
+            
+            // CASE 9: UPDATE QUANTITY (Admin)
             case 9:
                 system("cls");
                 updateItemQuantity(); 
@@ -123,12 +164,17 @@ void showLabMenu(string studentName , string matric) {
                 system("pause");
                 break;
 
+            // CASE 10: LOGOUT
             case 10: 
                 system("cls");
                 cout << "Logging out...\n"; 
                 system("pause");
+                // The break happens, then the 'while' condition checks 'choice'.
+                // Since choice is 10, the loop will terminate.
                 break;
 
+            // DEFAULT: ERROR HANDLING
+            // This runs if the user types a number not between 1-10
             default:
                 cout << "Invalid choice. Please try again.\n";
                 system("pause");
@@ -138,10 +184,11 @@ void showLabMenu(string studentName , string matric) {
     } while (choice != 10); // Loop ends when 10 is selected
 }
 
-// =============================================================
-// FUNCTION: main
-// PURPOSE: The Entry Point. Handles Login, Registration, and Exit.
-// =============================================================
+/* Programmer : TAN LE JUN ( 24304103 )
+=============================================================
+ FUNCTION: main
+ PURPOSE: The Entry Point. Handles Login, Registration, and Exit.
+============================================================= */
 
 int main() {
     int loginchoice;
@@ -210,4 +257,5 @@ int main() {
 
     return 0;
 }
+
 
