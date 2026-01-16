@@ -8,19 +8,25 @@
 
 using namespace std;
 
-// ( Data Structure )
-// Defines what a "LabItem" looks like: it has a Name and a Quantity.
+/* LIM YU HAN ( 25100159 )
+=========================================================
+ DATA STRUCTURE: LabItem
+ PURPOSE: A blueprint for a single item in our stock. 
+ Instead of managing two separate arrays (one for names, one for qty),
+ we group them into a single object.
+========================================================= */   
 
 struct LabItem { 
     string name; 
     int quantity; 
 };
 
-/*
+/* LIM YU HAN ( 25100159 )
+=========================================================
  Function 1: Check Borrow Status 
  This function checks is there any borrowed item under the given matric number.
  It show the item name if found, or no item if none found.
-*/
+=========================================================*/
 string checkBorrowStatus(string matric) {
     ifstream borrowFile("borrowed_data.txt"); // Read borrowed data file
     string fileMatric, fileItem;
@@ -42,8 +48,12 @@ string checkBorrowStatus(string matric) {
     return "NONE"; // No match found, so they haven't borrowed anything.
 }
 
-// Function 2: View All Lab Stock
-// Displays a table for all items currently in the text file.
+/* LIM YU HAN ( 25100159 )
+=========================================================
+ FUNCTION: viewLabStock
+ PURPOSE: Displays a neatly formatted table of all items 
+          available in 'lab_items_stock.txt'.
+========================================================= */
 
 void viewLabStock() {  
     ifstream stockFile("lab_items_stock.txt");  
@@ -78,7 +88,16 @@ void viewLabStock() {
     cout << "================================\n";
 }
 
-// Return Item (With Fine Calculation)
+/* THANISHWARAN A/L M.SARAVANAN ( 24304965 )
+=========================================================
+ FUNCTION: returnLabItem
+ PURPOSE: Handles the complex logic of returning an item:
+          1. Find the loan record.
+          2. Calculate late fines (if any).
+          3. Add the item back to stock (+1).
+          4. Remove the loan record from the file.
+========================================================= */
+// PARAMETERS: matric (The student's matric number)
 
 void returnLabItem(string matric) {
     ifstream bIn("borrowed_data.txt");
@@ -89,6 +108,7 @@ void returnLabItem(string matric) {
     bool found = false;
 
     //  Find what the user borrowed
+
     if (bIn.is_open()) {
         while (bIn >> fMatric >> fItem >> fTime) {
             if (fMatric == matric) {
@@ -100,6 +120,8 @@ void returnLabItem(string matric) {
         }
         bIn.close();
     }
+
+    // If no borrowed item found, exit function
 
     if (!found) {
         cout << "\n[Error] You have no items to return.\n";
@@ -130,12 +152,14 @@ void returnLabItem(string matric) {
     }
 
     // Confirmation
+
     cout << "\nConfirm Return? (1 = Yes, 0 = Cancel): ";
     int confirm;
     cin >> confirm;
     if (confirm != 1) return;
 
     // Increase Stock Quantity
+
     vector<LabItem> allItems;
     LabItem temp;
     ifstream inFile("lab_items_stock.txt");
@@ -148,6 +172,7 @@ void returnLabItem(string matric) {
     inFile.close();
 
     // Save updated stock
+
     ofstream outFile("lab_items_stock.txt");
     for (auto &item : allItems) {
         outFile << item.name << " " << item.quantity << endl;
@@ -156,11 +181,14 @@ void returnLabItem(string matric) {
 
     // Remove User from Borrow List
     // Rewrite the file, but skip the line belonging to this user
+
     vector<string> borrowLines;
     ifstream bRead("borrowed_data.txt");
     while (bRead >> fMatric >> fItem >> fTime) {
         if (fMatric != matric) {
+
             // Keep everyone else's data
+
             borrowLines.push_back(fMatric + " " + fItem + " " + to_string(fTime));
         }
     }
@@ -175,12 +203,19 @@ void returnLabItem(string matric) {
     cout << "[Success] Item returned.\n";
 }
 
-// Search Item
+/* THANISHWARAN A/L M.SARAVANAN ( 24304965 )
+=========================================================
+ FUNCTION: searchLabItem
+ PURPOSE: Allows users to search for items by typing part of the name.
+========================================================= */
+
 void searchLabItem() {
     string keyword;
     cout << "\n=== Search Lab Item ===\n";
     cout << "Enter item name to search: ";
     cin >> keyword;
+
+    // Open stock file and search for matches
 
     ifstream file("lab_items_stock.txt");
     string name;
@@ -199,24 +234,37 @@ void searchLabItem() {
         }
     }
 
+    // If no matches found, inform the user
+
     if (!found)
         cout << "[Info] No matching item found.\n";
 
     file.close();
 }
 
+/* THANISHWARAN A/L M.SARAVANAN ( 24304965 )
+=========================================================
+ FUNCTION: viewBorrowedItem
+ PURPOSE: Displays the item currently borrowed by a student.
+========================================================= */
 
 void viewBorrowedItem(string matric) {
     string item = checkBorrowStatus(matric);
 
+    // Display borrowed item
+
+    cout << "\n=== YOUR BORROWED ITEM ===\n";
     if (item == "NONE")
         cout << "You have not borrowed any item.\n";
     else
         cout << "You have borrowed: " << item << endl;
 }
 
-// Function : Borrow Item
-// For students to borrow an item from the lab stock.
+/* THANISHWARAN A/L M.SARAVANAN ( 24304965 )
+=========================================================
+ FUNCTION: borrowLabItem
+ PURPOSE: Allows a student to borrow an item if available.
+========================================================= */
 
 void borrowLabItem(string matric) {
    
